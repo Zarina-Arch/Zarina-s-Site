@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Білім орталығы — қабылдау комиссиясы</title>
+<style>
+:root{--bg:#eef2f6;--card:#fff;--ink:#14284b;--mut:#51607a;--acc:#0e8f7e;--accd:#0a6b5e;--line:#d5dde8;--warn:#b4232a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--card:#16223a;--ink:#e8eefb;--mut:#9fb0cc;--acc:#3cc7b3;--accd:#5fe0cc;--line:#2a3a5a;--warn:#ff8a8f}}
+:root[data-theme="dark"]{--bg:#0e1626;--card:#16223a;--ink:#e8eefb;--mut:#9fb0cc;--acc:#3cc7b3;--accd:#5fe0cc;--line:#2a3a5a;--warn:#ff8a8f}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--ink);color:#fff;padding:22px 18px 26px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header{background:#0a111f}}
+:root[data-theme="dark"] header{background:#0a111f}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+header .wrap{padding:0}
+h1{font-size:1.7rem;line-height:1.2;margin:0 0 8px}
+header p{margin:0 0 16px;color:#c9d6ee}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:7px 13px;border-radius:99px;font-size:.92rem}
+nav a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin:18px 0}
+h2{font-size:1.25rem;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 16px;font-size:.95rem}
+label{display:block;font-weight:600;font-size:.92rem;margin:12px 0 4px}
+input,select{width:100%;padding:11px 12px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px}
+button{font:inherit;font-weight:600;background:var(--acc);color:#fff;border:0;border-radius:9px;padding:12px 18px;margin-top:16px;width:100%;cursor:pointer}
+:root:not([data-theme="light"]) button{color:#06201b}
+.docs label{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:0;padding:10px 0;border-bottom:1px solid var(--line)}
+.docs input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--acc)}
+.bar{height:10px;background:var(--bg);border-radius:9px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s}
+.row{display:grid;grid-template-columns:1fr 84px;gap:10px;align-items:end}
+.res{margin-top:16px;padding:14px;border-radius:10px;background:var(--bg);border-left:5px solid var(--acc)}
+.res b{font-size:1.5rem}
+.ok{color:var(--accd)}.err{color:var(--warn)}
+#msg{margin-top:14px;display:none}
+footer{text-align:center;color:var(--mut);font-size:.85rem;padding:10px 0 30px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>Білім орталығының қабылдау комиссиясы</h1>
+<p>Өтінімді онлайн жіберіңіз, құжаттарды тексеріңіз, ҰБТ балыңызды есептеңіз.</p>
+<nav><a href="#apply">Өтінім</a><a href="#docs">Құжаттар</a><a href="#ubt">ҰБТ калькуляторы</a></nav>
+</div></header>
+
+<main class="wrap">
+<section id="apply">
+<h2>Онлайн өтінім</h2>
+<p class="sub">Форманы толтырыңыз, комиссия 2 жұмыс күні ішінде хабарласады.</p>
+<div id="form">
+<label for="fio">Аты-жөні</label><input id="fio" autocomplete="name" placeholder="Мысалы: Айдос Серіков">
+<label for="tel">Телефон</label><input id="tel" type="tel" autocomplete="tel" placeholder="+7 7XX XXX XX XX">
+<label for="prog">Бағыт</label>
+<select id="prog"><option>IT және бағдарламалау</option><option>Дизайн және мультимедиа</option><option>Бизнес және менеджмент</option><option>Шет тілдері</option><option>Құрылыс және инженерия</option></select>
+<label for="form2">Оқу формасы</label>
+<select id="form2"><option>Күндізгі</option><option>Сырттай</option><option>Онлайн</option></select>
+<button onclick="send()">Өтінім жіберу</button>
+<div id="msg" class="res" role="status"></div>
+</div>
+</section>
+
+<section id="docs" class="docs">
+<h2>Құжаттар тізімі</h2>
+<p class="sub">Дайын құжаттарды белгілеңіз.</p>
+<label><input type="checkbox" class="d"> Жеке куәлік көшірмесі</label>
+<label><input type="checkbox" class="d"> Орта білім туралы аттестат (түпнұсқа және көшірме)</label>
+<label><input type="checkbox" class="d"> ҰБТ сертификаты</label>
+<label><input type="checkbox" class="d"> Медициналық анықтама (086-У)</label>
+<label><input type="checkbox" class="d"> Егу картасы (063-У)</label>
+<label><input type="checkbox" class="d"> 3×4 өлшемді 6 фото</label>
+<div class="bar"><i id="pb"></i></div>
+<div id="pt" class="sub" style="margin:0">Дайын: 0 / 6</div>
+</section>
+
+<section id="ubt">
+<h2>ҰБТ балын есептеу</h2>
+<p class="sub">Әр пәннің балын енгізіңіз. Ең жоғарғы ұпай — 140.</p>
+<div class="row"><div><label for="s1">Қазақстан тарихы (0–20)</label></div><input id="s1" type="number" inputmode="numeric" min="0" max="20"></div>
+<div class="row"><div><label for="s2">Оқу сауаттылығы (0–10)</label></div><input id="s2" type="number" inputmode="numeric" min="0" max="10"></div>
+<div class="row"><div><label for="s3">Математикалық сауаттылық (0–10)</label></div><input id="s3" type="number" inputmode="numeric" min="0" max="10"></div>
+<div class="row"><div><label for="s4">Бейіндік пән 1 (0–40)</label></div><input id="s4" type="number" inputmode="numeric" min="0" max="40"></div>
+<div class="row"><div><label for="s5">Бейіндік пән 2 (0–40)</label></div><input id="s5" type="number" inputmode="numeric" min="0" max="40"></div>
+<label for="min">Қажетті шекті балл</label>
+<input id="min" type="number" inputmode="numeric" min="0" max="140" value="70">
+<button onclick="calc()">Есептеу</button>
+<div id="out" class="res" style="display:none" role="status"></div>
+</section>
+</main>
+<footer>© 2026 Білім орталығы. Оқу жобасы.</footer>
+
+<script>
+function $(i){return document.getElementById(i)}
+function send(){
+  var f=$('fio').value.trim(),t=$('tel').value.trim(),m=$('msg');
+  m.style.display='block';
+  if(f.length<3){m.innerHTML='<span class="err">Аты-жөніңізді толық жазыңыз.</span>';return}
+  if(t.replace(/\D/g,'').length<10){m.innerHTML='<span class="err">Телефон нөмірін дұрыс енгізіңіз.</span>';return}
+  m.innerHTML='<b class="ok">Өтінім қабылданды!</b><br>'+f.replace(/</g,'&lt;')+', бағыт: '+$('prog').value+', форма: '+$('form2').value+'. Комиссия сізбен хабарласады.';
+}
+var ds=document.querySelectorAll('.d');
+ds.forEach(function(c){c.addEventListener('change',function(){
+  var n=0;ds.forEach(function(x){if(x.checked)n++});
+  $('pb').style.width=(n/ds.length*100)+'%';
+  $('pt').textContent=n===ds.length?'Барлық құжат дайын!':'Дайын: '+n+' / '+ds.length;
+})});
+function calc(){
+  var lim=[20,10,10,40,40],sum=0,o=$('out');o.style.display='block';
+  for(var i=0;i<5;i++){var v=$('s'+(i+1)).value;
+    if(v===''||+v<0||+v>lim[i]){o.innerHTML='<span class="err">Барлық өрісті дұрыс толтырыңыз: '+(i+1)+'-пәннің балы 0–'+lim[i]+' аралығында болуы керек.</span>';return}
+    sum+=+v}
+  var mn=+$('min').value;
+  o.innerHTML='Жалпы балл: <b>'+sum+'</b> / 140<br>'+(sum>=mn?'<span class="ok">Шекті баллдан ('+mn+') асты — құжат тапсыруға болады.</span>':'<span class="err">Шекті баллға ('+mn+') '+(mn-sum)+' балл жетпейді.</span>');
+}
+</script>
+</body>
+</html>
